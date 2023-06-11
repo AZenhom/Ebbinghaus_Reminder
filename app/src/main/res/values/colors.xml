@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="colorPrimary">#380000</color>
+    <color name="colorPrimaryDark">#380000</color>
+    <color name="colorAccent">#380000</color>
+    <color name="colorSecondary">#F6BE00</color>
+    <color name="colorBackground">#f2f2f2</color>
+    <color name="elevatedCardBackground">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorWhite">#ffffff</color>
+
+    <color name="colorWhiteOrBlackInNight">#ffffff</color>
+    <color name="textColor">#000000</color>
+    <color name="textColorGrey">#99000000</color>
+
+    <color name="colorSwitchThumbEnabled">#F6BE00</color>
+    <color name="colorSwitchThumbDisabled">#808080</color>
+    <color name="colorSwitchTrackEnabled">#4DF6BE00</color>
+    <color name="colorSwitchTrackDisabled">#4D808080</color>
+
+    <color name="colorTransparent">#00000000</color>
+    <color name="colorDim">#4D000000</color>
+    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">
+        @color/colorSecondary
+    </color>
+
+    <color name="colorMarkerBoth">#388E3C</color>
+    <color name="colorMarkerCenter">#FFA900</color>
+    <color name="colorMarkerRemote">#3F51B5</color>
+
+    <color name="colorStatusBlue">#3F51B5</color>
+    <color name="colorStatusOrange">#FFA900</color>
+    <color name="colorStatusGreen">#388E3C</color>
+    <color name="colorStatusRed">#D50000</color>
+
+    <color name="colorReportPerfect">#388E3C</color>
+    <color name="colorReportScratched">#FFA900</color>
+    <color name="colorReportRepainted">#D50000</color>
+    <color name="colorReportInterior">#000000</color>
+</resources>

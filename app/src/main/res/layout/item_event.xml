@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cvRootView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginTop="8dp"
+    app:cardBackgroundColor="@color/elevatedCardBackground"
+    app:strokeWidth="@dimen/_1sdp"
+    app:strokeColor="@color/colorSecondary"
+    app:cardCornerRadius="@dimen/_4sdp"
+    app:cardElevation="@dimen/card_elevation">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvEventTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:fontFamily="@font/poppins_bold"
+            android:textAlignment="viewStart"
+            android:textColor="@color/textColor"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@id/ivArrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Event Name" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:drawableStart="@drawable/ic_date"
+            android:drawablePadding="@dimen/_4sdp"
+            android:drawableTint="@color/textColorGrey"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppins_regular"
+            android:maxLines="1"
+            android:textAlignment="viewStart"
+            android:textColor="@color/textColor"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@id/ivArrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvEventTitle"
+            tools:text="@string/added_text" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivArrow"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="@id/tvDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvEventTitle"
+            app:srcCompat="@drawable/ic_arrow_down"
+            app:tint="@color/textColorGrey" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="wrap_content"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:background="@color/textColorGrey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDate" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/view"
+            android:clickable="true"
+            android:focusable="true"/>
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:drawableStart="@drawable/ic_description"
+            android:drawablePadding="@dimen/_4sdp"
+            android:drawableTint="@color/textColorGrey"
+            android:fontFamily="@font/poppins_regular"
+            android:textAlignment="viewStart"
+            android:textColor="@color/textColor"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@id/ivArrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view"
+            tools:text="This event is for the reason lorem ipsum" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/lblEventSlots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:textAlignment="viewStart"
+            android:textColor="@color/textColor"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDescription"
+            android:text="@string/event_slots" />
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/flEventSLots"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/lblEventSlots"
+            app:flexWrap="wrap"
+            app:justifyContent="space_evenly"
+            android:paddingBottom="@dimen/_8sdp"/>
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/grExpanded"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:constraint_referenced_ids="tvDescription,lblEventSlots,flEventSLots"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

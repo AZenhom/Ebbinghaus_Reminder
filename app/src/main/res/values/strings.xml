@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Ebbinghaus Reminder</string>
+    <string name="added_text">Added: %1$s</string>
+    <string name="event_slots">Reminding Slots</string>
+    <string name="an_error_has_occurred">An unexpected error has occured</string>
+    <string name="click_twice">Please click BACK again to exit</string>
+</resources>

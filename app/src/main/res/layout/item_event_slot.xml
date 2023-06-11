@@ -1,0 +1,34 @@
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cvRootView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    app:cardBackgroundColor="@color/elevatedCardBackground"
+    app:cardCornerRadius="@dimen/_4sdp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/colorSecondary"
+    app:strokeWidth="@dimen/_1sdp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/_8sdp"
+        android:paddingVertical="@dimen/_3sdp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvEventSlot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:textAlignment="viewStart"
+            android:textColor="@color/textColor"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Monday 24 March 2023: 3:00 PM" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>
