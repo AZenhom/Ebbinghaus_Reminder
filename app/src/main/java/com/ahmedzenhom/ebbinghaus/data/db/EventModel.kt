@@ -7,8 +7,8 @@ import java.io.Serializable
 
 @Entity
 data class EventModel(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey
+    val id: Int,
     val title: String,
     val description: String,
     val createdAt: Long,
@@ -26,10 +26,9 @@ data class EventModel(
 
 @Entity
 data class EventSlotsModel(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey
+    val id: Int,
     val order: Int,
     val eventId: Int,
     val slotTime: Long,
-    var reminded: Boolean
 ) : Serializable

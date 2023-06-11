@@ -10,6 +10,9 @@ interface EventDao {
     @Query("SELECT * FROM EventModel WHERE id = :id")
     suspend fun getEventById(id: Int): EventModel?
 
+    @Query("SELECT * FROM EventModel ORDER BY createdAt DESC")
+    suspend fun getAllEvents(): List<EventModel>
+
     @Query("DELETE FROM EventModel WHERE id = :id")
     suspend fun deleteEventById(id: Int)
 

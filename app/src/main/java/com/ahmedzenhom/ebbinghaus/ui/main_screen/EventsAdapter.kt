@@ -1,4 +1,4 @@
-package com.ahmedzenhom.ebbinghaus.ui
+package com.ahmedzenhom.ebbinghaus.ui.main_screen
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -52,6 +52,7 @@ class EventsAdapter constructor(
                     else
                         animateExpand()
                 }
+                ivRemove.setOnClickListener { onItemRemove?.invoke(item) }
 
             }
         }
@@ -80,7 +81,7 @@ class EventsAdapter constructor(
             grExpanded.visibility = View.GONE
         }
 
-        fun getFormattedDate(date: Long) =
+        private fun getFormattedDate(date: Long): String =
             SimpleDateFormat("EEE mm-MM-yyyy hh:mm a", Locale.US).format(Date(date))
     }
 
@@ -113,8 +114,7 @@ class EventsAdapter constructor(
             for (i in oldItems.indices)
                 if (oldItems[i].order != newItems[i].order ||
                     oldItems[i].eventId != newItems[i].eventId ||
-                    oldItems[i].slotTime != newItems[i].slotTime ||
-                    oldItems[i].reminded != newItems[i].reminded
+                    oldItems[i].slotTime != newItems[i].slotTime
                 ) return false
             return true
         }

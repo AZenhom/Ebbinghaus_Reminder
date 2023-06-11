@@ -2,6 +2,12 @@
     <string name="app_name">Ebbinghaus Reminder</string>
     <string name="added_text">Added: %1$s</string>
     <string name="event_slots">Reminding Slots</string>
-    <string name="an_error_has_occurred">An unexpected error has occured</string>
+    <string name="reminder_no">Reminder(%1$d)</string>
+    <string name="an_error_has_occurred">An unexpected error has occurred</string>
     <string name="click_twice">Please click BACK again to exit</string>
+    <string name="event_added_successfully">Event added successfully</string>
+    <string name="event_deleted_successfully">Event deleted successfully</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="are_you_sure_you_want_to_delete_event">Are you sure you want to delete this event and unschedule all of it\'s reminders ?</string>
 </resources>

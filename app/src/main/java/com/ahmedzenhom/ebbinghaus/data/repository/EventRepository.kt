@@ -22,6 +22,11 @@ class EventRepository @Inject constructor(
         }
     }
 
+    suspend fun getAllEvents(): List<EventModel> = execute {
+        return@execute eventDao.getAllEvents()
+            .map { it.apply { slots = eventSlotsDao.getAllByEventId(it.id) } }
+    }
+
     suspend fun deleteEventById(id: Int) = execute {
         eventDao.deleteEventById(id)
         eventSlotsDao.deleteAllByEventId(id)

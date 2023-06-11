@@ -123,15 +123,28 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/lblEventSlots"
             app:flexWrap="wrap"
-            app:justifyContent="space_evenly"
-            android:paddingBottom="@dimen/_8sdp"/>
+            app:justifyContent="space_evenly"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivRemove"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            app:srcCompat="@drawable/ic_remove_event"
+            app:tint="@color/warningColor"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:layout_constraintTop_toBottomOf="@id/flEventSLots"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/grExpanded"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:visibility="gone"
-            app:constraint_referenced_ids="tvDescription,lblEventSlots,flEventSLots"
+            app:constraint_referenced_ids="tvDescription,lblEventSlots,flEventSLots,ivRemove"
             tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
