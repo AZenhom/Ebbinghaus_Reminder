@@ -7,6 +7,7 @@ import com.ahmedzenhom.ebbinghaus.base.BaseActivity
 import com.ahmedzenhom.ebbinghaus.data.db.EventModel
 import com.ahmedzenhom.ebbinghaus.data.db.EventSlotsModel
 import com.ahmedzenhom.ebbinghaus.databinding.ActivityMainBinding
+import com.ahmedzenhom.ebbinghaus.ui.dialogs.AddEventDialog
 import com.ahmedzenhom.ebbinghaus.ui.dialogs.InfoDialog
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
@@ -32,18 +33,21 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         adapter = EventsAdapter { showDeleteEventSheet(it) }
         rvEvents.adapter = adapter
         // Click Listeners
-        fabAdd.setOnClickListener {
-            createNewEvent(
-                "Memorize the introducing",
-                "Memorize the english introducing for yourself in english",
-                10
-            )
-        }
+        fabAdd.setOnClickListener { showCreateNewEventDialog() }
 
     }
 
     private fun initObservers() {
         viewModel.eventsLiveData.observe(this) { adapter.submitList(it) }
+    }
+
+    private fun showCreateNewEventDialog() {
+        var addEventDialog: AddEventDialog? = null
+        addEventDialog = AddEventDialog(onConfirm = { eventName, reminderNotes, reminderCount ->
+            addEventDialog?.dismiss()
+            createNewEvent(eventName, reminderNotes, reminderCount)
+        })
+        addEventDialog.show(supportFragmentManager, AddEventDialog.TAG)
     }
 
     private fun showDeleteEventSheet(event: EventModel) {
@@ -53,7 +57,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             imageRes = R.drawable.ic_remove_event,
             message = getString(R.string.are_you_sure_you_want_to_delete_event),
             confirmText = getString(R.string.delete),
-            onConfirm = { infoDialog?.dismiss();deleteEvent(event) },
+            onConfirm = {
+                infoDialog?.dismiss()
+                deleteEvent(event)
+            },
             isCancelable = true
         )
         infoDialog.show(supportFragmentManager, InfoDialog.TAG)
