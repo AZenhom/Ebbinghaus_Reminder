@@ -17,4 +17,5 @@
     <string name="reminder_notes">Reminder notes</string>
     <string name="reminder_count">Number of reminders</string>
     <string name="reminder_notes_hint">Ex: Memorize this new vocabulary word</string>
+    <string name="notification_permission_error">Notification permissions must be granted first in Android 13+</string>
 </resources>

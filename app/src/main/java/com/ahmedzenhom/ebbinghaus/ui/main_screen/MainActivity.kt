@@ -1,6 +1,12 @@
 package com.ahmedzenhom.ebbinghaus.ui.main_screen
 
+import android.Manifest
+import android.Manifest.permission
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.activity.viewModels
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.ahmedzenhom.ebbinghaus.R
 import com.ahmedzenhom.ebbinghaus.ReminderReceiver
 import com.ahmedzenhom.ebbinghaus.base.BaseActivity
@@ -10,7 +16,7 @@ import com.ahmedzenhom.ebbinghaus.databinding.ActivityMainBinding
 import com.ahmedzenhom.ebbinghaus.ui.dialogs.AddEventDialog
 import com.ahmedzenhom.ebbinghaus.ui.dialogs.InfoDialog
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Calendar
+import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.pow
 import kotlin.random.Random
@@ -33,12 +39,30 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         adapter = EventsAdapter { showDeleteEventSheet(it) }
         rvEvents.adapter = adapter
         // Click Listeners
-        fabAdd.setOnClickListener { showCreateNewEventDialog() }
+        fabAdd.setOnClickListener { checkNotificationsPermission() }
 
     }
 
     private fun initObservers() {
         viewModel.eventsLiveData.observe(this) { adapter.submitList(it) }
+    }
+
+    private fun checkNotificationsPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val permissionDenied =
+                ContextCompat.checkSelfPermission(this, permission.POST_NOTIFICATIONS) !=
+                        PackageManager.PERMISSION_GRANTED
+            if (permissionDenied) {
+                showErrorMsg(getString(R.string.notification_permission_error))
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(permission.POST_NOTIFICATIONS),
+                    101
+                )
+                return
+            }
+        }
+        showCreateNewEventDialog()
     }
 
     private fun showCreateNewEventDialog() {
