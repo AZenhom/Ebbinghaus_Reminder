@@ -12,6 +12,7 @@ import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.ahmedzenhom.ebbinghaus.data.db.EventModel
 import com.ahmedzenhom.ebbinghaus.ui.main_screen.MainActivity
 
@@ -72,11 +73,11 @@ class ReminderReceiver : BroadcastReceiver() {
         }
     }
 
-    @SuppressLint("UnspecifiedImmutableFlag")
+    @SuppressLint("UnspecifiedImmutableFlag", "UseCompatLoadingForDrawables")
     override fun onReceive(context: Context?, intent: Intent?) {
         // Notification channel configs
         val notificationManager =
-            context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            context?.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         val channelId = "reminders_channel"
         val channelName = "Ebbinghaus Reminders Channel"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -102,7 +103,8 @@ class ReminderReceiver : BroadcastReceiver() {
         val notificationBuilder = NotificationCompat.Builder(context, channelId)
             .setContentTitle(eventName)
             .setContentText(reminderText)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.mipmap.ic_notification)
+            .setLargeIcon(context.getDrawable(R.mipmap.ic_notification)?.toBitmap())
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
 

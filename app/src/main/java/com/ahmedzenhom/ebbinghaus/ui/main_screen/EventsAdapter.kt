@@ -82,7 +82,7 @@ class EventsAdapter constructor(
         }
 
         private fun getFormattedDate(date: Long): String =
-            SimpleDateFormat("EEE mm-MM-yyyy hh:mm a", Locale.US).format(Date(date))
+            SimpleDateFormat("EEE dd-MM-yyyy hh:mm a", Locale.US).format(Date(date))
     }
 
 

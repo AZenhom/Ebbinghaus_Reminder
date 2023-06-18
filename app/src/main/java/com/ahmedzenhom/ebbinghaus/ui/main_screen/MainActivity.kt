@@ -1,6 +1,5 @@
 package com.ahmedzenhom.ebbinghaus.ui.main_screen
 
-import android.Manifest
 import android.Manifest.permission
 import android.content.pm.PackageManager
 import android.os.Build
