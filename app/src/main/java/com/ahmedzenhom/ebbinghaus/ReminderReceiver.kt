@@ -14,7 +14,15 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.ahmedzenhom.ebbinghaus.data.db.EventModel
+import com.ahmedzenhom.ebbinghaus.data.db.EventSlotsModel
+import com.ahmedzenhom.ebbinghaus.data.repository.EventRepository
 import com.ahmedzenhom.ebbinghaus.ui.main_screen.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.util.*
+import javax.inject.Inject
 
 class ReminderReceiver : BroadcastReceiver() {
 
@@ -25,44 +33,53 @@ class ReminderReceiver : BroadcastReceiver() {
         private const val REMINDER_ID = "reminder_id"
         private const val REMINDER_TEXT = "reminder_text"
 
-        fun scheduleReminders(context: Context, event: EventModel) {
-            event.slots.forEachIndexed { index, reminder ->
-                // Putting reminder data in the intent
-                val reminderTime = reminder.slotTime
-                val reminderText = event.description
-                val eventName =
-                    "${event.title} - ${context.getString(R.string.reminder_no, index + 1)}"
+        private fun getReminderIntent(
+            context: Context,
+            event: EventModel,
+            reminder: EventSlotsModel
+        ): Intent {
+            val reminderText = event.description
+            val eventName = "${event.title} - ${
+                context.getString(R.string.reminder_no, reminder.order + 1)
+            }"
 
-                val reminderIntent = Intent(context, ReminderReceiver::class.java).apply {
-                    putExtra(EVENT_NAME, eventName)
-                    putExtra(REMINDER_ID, reminder.id)
-                    putExtra(REMINDER_TEXT, reminderText)
-                }
+            return Intent(context, ReminderReceiver::class.java).apply {
+                putExtra(EVENT_NAME, eventName)
+                putExtra(REMINDER_ID, reminder.id)
+                putExtra(REMINDER_TEXT, reminderText)
+            }
+        }
+
+        fun scheduleReminders(context: Context, event: EventModel) {
+            event.slots.forEach { reminder ->
                 val pendingIntent = PendingIntent.getBroadcast(
                     context,
                     reminder.id,
-                    reminderIntent,
+                    getReminderIntent(context, event, reminder),
                     PendingIntent.FLAG_UPDATE_CURRENT
                 )
                 val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, reminderTime, pendingIntent)
+                alarmManager.setExactAndAllowWhileIdle(
+                    AlarmManager.RTC_WAKEUP,
+                    reminder.slotTime,
+                    pendingIntent
+                )
             }
         }
 
         fun cancelReminders(context: Context, event: EventModel) {
-            event.slots.forEach {
-                val reminderId = it.id
+            event.slots.forEach { reminder ->
+                val reminderId = reminder.id
                 // Cancel Notification if shown
                 val notificationManager =
                     context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
                 notificationManager.cancel(reminderId)
                 // Cancel Alarm
-                val reminderIntent = Intent(context, ReminderReceiver::class.java)
                 val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
                 val reminderPendingIntent = PendingIntent.getBroadcast(
                     context,
                     reminderId,
-                    reminderIntent,
+                    getReminderIntent(context, event, reminder),
                     PendingIntent.FLAG_NO_CREATE
                 )
                 if (reminderPendingIntent != null) {
@@ -110,5 +127,23 @@ class ReminderReceiver : BroadcastReceiver() {
 
         // Showing the notification
         notificationManager.notify(reminderId, notificationBuilder.build())
+    }
+}
+
+@AndroidEntryPoint
+class OnBootReceiver : BroadcastReceiver() {
+
+    @Inject
+    lateinit var repository: EventRepository
+
+    @SuppressLint("UnsafeProtectedBroadcastReceiver")
+    @OptIn(DelicateCoroutinesApi::class)
+    override fun onReceive(context: Context?, intent: Intent?) {
+        if (context == null)
+            return
+        GlobalScope.launch {
+            val events = repository.getAllEventsWithSlotsAfter(Calendar.getInstance().timeInMillis)
+            events.forEach { ReminderReceiver.scheduleReminders(context, it) }
+        }
     }
 }

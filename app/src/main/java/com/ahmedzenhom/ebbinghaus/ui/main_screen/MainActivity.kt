@@ -114,7 +114,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     private fun calculateAndSetIntervals(event: EventModel, intervalsCount: Int) {
         val slotsList = mutableListOf<EventSlotsModel>()
-        val baseInterval = TimeUnit.HOURS.toMillis(1)
+        val baseInterval = TimeUnit.MINUTES.toMillis(1)
         for (i in 0 until intervalsCount) {
             val slot = EventSlotsModel(
                 id = Random.nextInt(1, 9999999),

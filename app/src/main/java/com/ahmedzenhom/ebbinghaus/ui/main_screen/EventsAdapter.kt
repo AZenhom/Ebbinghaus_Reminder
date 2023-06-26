@@ -44,6 +44,7 @@ class EventsAdapter constructor(
                 tvDate.text =
                     tvDate.context.getString(R.string.added_text, getFormattedDate(item.createdAt))
                 tvDescription.text = item.description
+                flEventSLots.removeAllViews()
                 item.slots.forEach { flEventSLots.addView(inflateSlotView(it)) }
                 // Click Listeners
                 view2.setOnClickListener {

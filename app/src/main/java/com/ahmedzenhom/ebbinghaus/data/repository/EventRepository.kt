@@ -27,6 +27,12 @@ class EventRepository @Inject constructor(
             .map { it.apply { slots = eventSlotsDao.getAllByEventId(it.id) } }
     }
 
+    suspend fun getAllEventsWithSlotsAfter(time: Long): List<EventModel> = execute {
+        return@execute eventDao.getAllEvents()
+            .map { it.apply { slots = eventSlotsDao.getAllByEventIdAfter(it.id, time) } }
+            .filter { it.slots.isNotEmpty() }
+    }
+
     suspend fun deleteEventById(id: Int) = execute {
         eventDao.deleteEventById(id)
         eventSlotsDao.deleteAllByEventId(id)
